@@ -1,0 +1,5 @@
+for (i = 0\n
+  ; i < 10;\n
+  i = i + 1\n
+  )\n
+print i\n
