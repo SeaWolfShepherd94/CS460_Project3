@@ -85,3 +85,16 @@ TypeDescriptor* SymTab::getValueFor(std::string vName) {
     }
     return symTab.find(vName)->second;
 }
+
+bool SymTab::isString(std::string vName) {
+    if( ! isDefined(vName)) {
+        std::cout << "SymTab::isString: " << vName << " has not been defined.\n";
+        exit(1);
+    }
+    NumberTypeDescriptor *nDesc = dynamic_cast<NumberTypeDescriptor*>(symTab.find(vName)->second);
+    if(nDesc == nullptr){
+        return true;
+    }
+    return false;
+}
+

@@ -69,6 +69,7 @@ public:
     void setValueFor(std::string vName, std::string value);
     bool isDefined(std::string vName);
     TypeDescriptor* getValueFor(std::string vName);
+    bool isString(std::string vName);
 
 //    bool isString(std::string vName);
 //    int getValueFor(std::string vName);

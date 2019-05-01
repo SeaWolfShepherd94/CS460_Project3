@@ -124,4 +124,23 @@ private:
     ExprNode *_varExpression;
 };
 
+class Array : public Statement {
+    Array();
+    Array(std::string rhsVar);
+    Array(ExprNode* rightHandSideExpr);
+    Array(std::vector<ExprNode*> rhsVect);
+
+    std::string &rhsVariable();
+    ExprNode *rightHandSideExpr() const;
+    const std::vector<ExprNode *> &rhsVect() const;
+
+    virtual void print();
+    virtual void evaluate(SymTab &symTab);
+
+private:
+    std::vector<ExprNode*> _rhsVect;
+    std::string _rhsVariable;
+    ExprNode *_rightHandSideExpr;
+};
+
 #endif //EXPRINTER_STATEMENTS_HPP

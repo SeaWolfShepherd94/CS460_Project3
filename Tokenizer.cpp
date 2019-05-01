@@ -145,7 +145,7 @@ Token Tokenizer::getToken() {
         token.symbol(c);
     else if( c == '"' ) {
 	inStream.putback(c);
-	token.setName( readQuote() );
+	token.setStringS( readQuote() );
     } else if(isalpha(c)) {  // an identifier?
         // put c back into the stream so we can read the entire name in a function.
         inStream.putback(c);

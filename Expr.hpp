@@ -21,6 +21,7 @@ public:
     virtual void print() = 0;
     virtual int evaluate(SymTab &symTab) = 0;
     virtual std::string stringEvaluate(SymTab &symTab) = 0;
+    virtual bool isString(SymTab &symTab) = 0;
 
 private:
     Token _token;
@@ -38,6 +39,7 @@ public:
     virtual void print();
     virtual int evaluate(SymTab &symTab);
     virtual std::string stringEvaluate(SymTab &symTab);
+    virtual bool isString(SymTab &symTab);
 
 private:
     ExprNode *_left, *_right;
@@ -53,6 +55,7 @@ public:
     virtual void print();
     virtual int evaluate(SymTab &symTab);
     virtual std::string stringEvaluate(SymTab &symTab);
+    virtual bool isString(SymTab &symTab);
 };
 
 // Varialbe is a leaf-node in an expression tree. It corresponds to
@@ -65,6 +68,7 @@ public:
     virtual void print();
     virtual int evaluate(SymTab &symTab);
     virtual std::string stringEvaluate(SymTab &symTab);
+    virtual bool isString(SymTab &symTab);
 };
 
 class Comma: public ExprNode {
@@ -72,6 +76,8 @@ public:
     Comma(Token token);
     virtual void print();
     virtual int evaluate(SymTab &symTab);
+    virtual std::string stringEvaluate(SymTab &symTab);
+    virtual bool isString(SymTab &symTab);
 };
 
 class String: public ExprNode {
@@ -80,6 +86,7 @@ public:
     virtual void print();
     virtual int evaluate(SymTab &symTab);
     virtual std::string stringEvaluate(SymTab &symTab);
+    virtual bool isString(SymTab &symTab);
 };
 
 class Range: public ExprNode {
@@ -87,6 +94,7 @@ class Range: public ExprNode {
     virtual void print();
     virtual int evaluate(SymTab &symTab);
     virtual std::string stringEvaluate(SymTab &symTab);
+    virtual bool isString(SymTab &symTab);
 };
 
 #endif //EXPRINTER_ARITHEXPR_HPP

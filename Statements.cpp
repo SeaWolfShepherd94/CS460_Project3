@@ -123,8 +123,8 @@ void AssignmentStatement::evaluate(SymTab &symTab) {
         }
     }
      */
-    int rhs = rhsExpression()->evaluate(symTab);
-    symTab.setValueFor(lhsVariable(), rhs);
+    //int rhs = rhsExpression()->evaluate(symTab);
+    //symTab.setValueFor(lhsVariable(), rhs);
 }
 
 std::string &AssignmentStatement::lhsVariable() {
@@ -160,7 +160,11 @@ void PrintStatement::evaluate(SymTab &symTab) {
             std::cout << rightVect[i]->token().getStringS() << " ";
         }
         else if(rightVect[i]->token().isArithmeticOperator()){
-            std::cout << rightVect[i]->evaluate(symTab) << " ";
+	    if (rightVect[i]->isString(symTab)) {
+                std::cout << rightVect[i]->stringEvaluate(symTab) << std::endl;
+	    } else {
+	        std::cout << rightVect[i]->evaluate(symTab) << " ";
+	    }
         }
 	else if (rightVect[i]->token().isRelationalOperator()) {
 	    if (rightVect[i]->evaluate(symTab)) {
@@ -287,8 +291,6 @@ void PrintStatement::evaluate(SymTab &symTab) {
      */
 
 
-
-
 }
 
 void PrintStatement::print() {
@@ -377,4 +379,24 @@ void Comment::print() {
     std::cout << _hash << " ";
     varExpression()->print();
     std::cout << std::endl;
+}
+
+// Array Statement
+Array::Array() :  _rhsVariable{""}{}
+
+Array::Array(std::string rhsVar):
+        _rhsVariable{rhsVar} {}
+
+Array::Array(ExprNode *rightHandSideExpression) :
+        _rightHandSideExpr{rightHandSideExpression} {}
+
+Array::Array(std::vector<ExprNode *> rhsVect) :
+        _rhsVect{rhsVect} {}
+
+void Array::evaluate(SymTab &symTab) {
+    std::cout << "Array::evaluate" << std::endl;
+}
+
+void Array::print() {
+    std::cout << _rhsVariable << std::endl;
 }

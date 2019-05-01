@@ -62,9 +62,11 @@ std::string InfixExprNode::stringEvaluate(SymTab &symTab) {
     std::string lValue = left()->stringEvaluate(symTab);
     std::string rValue = right()->stringEvaluate(symTab);
     std::cout << "InfixExprNode::stringEvaluate: " << lValue << " " << token().symbol() << " " << rValue << std::endl;
-    if( token().isAdditionOperator() )
+    if( token().isAdditionOperator() ) {
+	    lValue = lValue.substr(0, lValue.length()-1);
+	    rValue = rValue.substr(1, rValue.length()-1);
         return lValue + rValue;
-    else {
+    } else {
         std::cout << "InfixExprNode::evaluate: don't know how to evaluate this operator\n";
         token().print();
         std::cout << std::endl;
@@ -76,6 +78,10 @@ void InfixExprNode::print() {
     _left->print();
     token().print();
     _right->print();
+}
+
+bool InfixExprNode::isString(SymTab &symTab) {
+    return symTab.isString(_left->token().getName()) && symTab.isString(_right->token().getName());
 }
 
 // WHoleNumber
@@ -93,6 +99,11 @@ int WholeNumber::evaluate(SymTab &symTab) {
 
 std::string WholeNumber::stringEvaluate(SymTab &symTab) {
     std::cout << "WholeNumber::stringEvaluate was called!" << std::endl;
+    exit(1);
+}
+
+bool WholeNumber::isString(SymTab &symTab) {
+    std::cout << "WholeNumber::isString was called!" << std::endl;
     exit(1);
 }
 
@@ -133,8 +144,14 @@ std::string Variable::stringEvaluate(SymTab &symTab) {
         std::cout << "Variable::stringEvaluate, nDesc is NULL\n";
         exit(1);
     }
-    std::cout << "Variable::evaluate: returning " << symTab.getValueFor(token().getName()) << std::endl;
+    //std::cout << "Variable::evaluate: returning " << symTab.getValueFor(token().getName()) << std::endl;
+    std::cout << "Variable::evaluate: returning " << nDesc->stringValue << std::endl;
     return nDesc->stringValue;
+}
+
+bool Variable::isString(SymTab &symTab) {
+    std::cout << "Variable::isString() was called!" << std::endl;
+    exit(1);
 }
 
 Comma::Comma(Token token): ExprNode{token} {}
@@ -144,7 +161,18 @@ void Comma::print() {
 }
 
 int Comma::evaluate(SymTab &symTab) {
-    return 1;
+    std::cout << "Comma::evaluate(SymTab &symTab) was called!" << std::endl;
+    exit(1);
+}
+
+std::string Comma::stringEvaluate(SymTab &symTab) {
+    std::cout << "Comma::stringEvaluate(SymTab &symTab) was called!" << std::endl;
+    exit(1);
+}
+
+bool Comma::isString(SymTab &symTab) {
+    std::cout << "Comma::isString was called!" << std::endl;
+    exit(1);
 }
 
 //String
@@ -156,12 +184,17 @@ void String::print() {
 
 int String::evaluate(SymTab &symTab){
     std::cout << "String::evaluate FOR INT called! " << std::endl;
+    std::cout << "String::evaluate: " << token().getStringS() << std::endl;
     exit(2);
 }
 
 std::string String::stringEvaluate(SymTab &symTab) {
     std::cout << "String::evaluate: returning " << token().getStringS() << std::endl;
     return token().getStringS();
+}
+
+bool String::isString(SymTab &symTab) {
+    return token().isStringS();
 }
 
 Range::Range(Token token): ExprNode{token} {}
@@ -178,5 +211,10 @@ int Range::evaluate(SymTab &symTab) {
 std::string Range::stringEvaluate(SymTab &symTab) {
     std::cout << "String::evaluate return " << token().getStringS() << std::endl;
     return token().getStringS();
+}
+
+bool Range::isString(SymTab &symTab) {
+    std::cout << "Range::isString() was called! " << std::endl;
+    exit(1);
 }
 
